@@ -2,7 +2,7 @@
 
 Personal portfolio of Rahul Jadhav, built to show projects and case studies.
 
-Live demo: (add the Vercel URL after step 12)
+Live demo: 649129https://portfolio-tan-eight-32.vercel.app/
 
 ## Architecture
 
