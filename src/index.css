@@ -1,8 +1,10 @@
 :root {
   --bg: #ffffff;
+  --surface: #f6f7f9;
   --text: #1a1a1a;
   --muted: #555555;
   --accent: #0b5cad;
+  --accent-text: #ffffff;
   --border: #d9d9d9;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -18,10 +20,133 @@ body {
   color: var(--text);
 }
 
-.page {
-  max-width: 720px;
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 3rem 1.25rem;
+  padding: 0 1.25rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.menu-button {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav {
+  display: none;
+  width: 100%;
+}
+
+.nav.open {
+  display: block;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  display: block;
+  padding: 0.5rem 0.25rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav a.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (min-width: 720px) {
+  .menu-button {
+    display: none;
+  }
+
+  .nav,
+  .nav.open {
+    display: block;
+    width: auto;
+  }
+
+  .nav ul {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+
+  .nav a {
+    padding: 0.25rem 0;
+  }
+}
+
+.main {
+  flex: 1;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 h1 {
@@ -30,10 +155,20 @@ h1 {
   line-height: 1.2;
 }
 
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+}
+
 .headline {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
   font-size: 1.15rem;
   color: var(--muted);
+}
+
+.intro {
+  max-width: 60ch;
+  margin: 0 0 1.5rem;
 }
 
 .stack {
@@ -52,7 +187,63 @@ h1 {
   font-size: 0.9rem;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
 .note {
   color: var(--muted);
-  font-size: 0.95rem;
+}
+
+.link-list {
+  padding-left: 1.25rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: var(--muted);
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
