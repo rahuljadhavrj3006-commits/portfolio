@@ -1,6 +1,15 @@
+import { useEffect } from 'react'
 import { site } from '../data/site'
 
 function CvContact() {
+  useEffect(() => {
+    const previous = document.title
+    document.title = `CV and Contact | ${site.name}`
+    return () => {
+      document.title = previous
+    }
+  }, [])
+
   return (
     <section>
       <h1>CV and contact</h1>

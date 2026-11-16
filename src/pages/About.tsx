@@ -1,11 +1,21 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Section from '../components/Section'
 import { aboutParagraphs } from '../data/about'
 import { experience } from '../data/experience'
+import { site } from '../data/site'
 import { skillGroups } from '../data/skills'
 
 function About() {
-  const [showHighlights, setShowHighlights] = useState(true)
+  const [showHighlights, setShowHighlights] = useState(false)
   const experienceRef = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    const previous = document.title
+    document.title = `About | ${site.name}`
+    return () => {
+      document.title = previous
+    }
+  }, [])
 
   function jumpToExperience() {
     experienceRef.current?.scrollIntoView()
@@ -13,7 +23,7 @@ function About() {
   }
 
   return (
-    <section>
+    <>
       <h1>About</h1>
 
       {aboutParagraphs.map((text, index) => (
@@ -30,55 +40,57 @@ function About() {
         Jump to experience
       </button>
 
-      <h2>Skills</h2>
-      <div className="skill-groups">
-        {skillGroups.map((group) => (
-          <section
-            key={group.id}
-            className="skill-group"
-            aria-labelledby={`skills-${group.id}`}
-          >
-            <h3 id={`skills-${group.id}`}>{group.title}</h3>
-            <ul className="tag-list">
-              {group.skills.map((skill) => (
-                <li key={skill}>{skill}</li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
-
-      <div className="section-head">
-        <h2 ref={experienceRef} tabIndex={-1}>
-          Experience
-        </h2>
-        <button
-          type="button"
-          className="link-button"
-          onClick={() => setShowHighlights((show) => !show)}
-        >
-          {showHighlights ? 'Hide highlights' : 'Show highlights'}
-        </button>
-      </div>
-
-      <ol className="timeline">
-        {experience.map((item) => (
-          <li key={item.id} className="timeline-item">
-            <p className="timeline-period">{item.period}</p>
-            <h3>{item.role}</h3>
-            <p className="timeline-org">{item.organisation}</p>
-            <p>{item.summary}</p>
-            {showHighlights && (
-              <ul>
-                {item.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
+      <Section title="Skills">
+        <div className="skill-groups">
+          {skillGroups.map((group) => (
+            <section
+              key={group.id}
+              className="skill-group"
+              aria-labelledby={`skills-${group.id}`}
+            >
+              <h3 id={`skills-${group.id}`}>{group.title}</h3>
+              <ul className="tag-list">
+                {group.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
                 ))}
               </ul>
-            )}
-          </li>
-        ))}
-      </ol>
-    </section>
+            </section>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        title="Experience"
+        ref={experienceRef}
+        actions={
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => setShowHighlights((show) => !show)}
+          >
+            {showHighlights ? 'Hide highlights' : 'Show highlights'}
+          </button>
+        }
+      >
+        <ol className="timeline">
+          {experience.map((item) => (
+            <li key={item.id} className="timeline-item">
+              <p className="timeline-period">{item.period}</p>
+              <h3>{item.role}</h3>
+              <p className="timeline-org">{item.organisation}</p>
+              <p>{item.summary}</p>
+              {showHighlights && (
+                <ul>
+                  {item.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ol>
+      </Section>
+    </>
   )
 }
 
