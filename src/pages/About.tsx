@@ -1,44 +1,54 @@
-import {useRef,useState} from "react";
-import { aboutParagraphs } from "../data/about";
-import { skillGroups } from "../data/skills";
-import { experience } from "../data/experience";
+import { useRef, useState } from 'react'
+import { aboutParagraphs } from '../data/about'
+import { experience } from '../data/experience'
+import { skillGroups } from '../data/skills'
 
 function About() {
-    const [showHighlights, setShowHighlights] = useState(false);
-    const experienceRef = useRef<HTMLHeadingElement>(null);
+  const [showHighlights, setShowHighlights] = useState(true)
+  const experienceRef = useRef<HTMLHeadingElement>(null)
 
-    function jumpToExperience() {
-        experienceRef.current?.scrollIntoView();
-        experienceRef.current?.focus({ preventScroll: true  });
-    }
+  function jumpToExperience() {
+    experienceRef.current?.scrollIntoView()
+    experienceRef.current?.focus({ preventScroll: true })
+  }
 
-    return (
-        <section>
-            <h1>About Me</h1>
-            {aboutParagraphs.map((text, index) => (
-                <p key={index} className="about-text">
-                    {text}
-                </p>
-            ))}
+  return (
+    <section>
+      <h1>About</h1>
 
-            <button type="button" onClick={jumpToExperience} className="btn btn-secondary">
-                Jump to experience
-            </button>
+      {aboutParagraphs.map((text, index) => (
+        <p key={index} className="about-text">
+          {text}
+        </p>
+      ))}
 
-            <h2>Skills</h2>
-            <div className ="skill-group">
-                {skillGroups.map((group) => (
-                <section key={group.id} className="skill-group" aria-labelledby={group.id}>
-                    <h3 id= {`skill-group-${group.id}`}>{group.title}</h3>
-                    <ul className ="tag-list">
-                        {group.skills.map((skill) => (
-                            <li key={skill}>{skill}</li>
-                        ))}
-                    </ul>
-                </section>
-            ))}
-            </div>
-            <div className="section-head">
+      <button
+        type="button"
+        className="btn btn-secondary"
+        onClick={jumpToExperience}
+      >
+        Jump to experience
+      </button>
+
+      <h2>Skills</h2>
+      <div className="skill-groups">
+        {skillGroups.map((group) => (
+          <section
+            key={group.id}
+            className="skill-group"
+            aria-labelledby={`skills-${group.id}`}
+          >
+            <h3 id={`skills-${group.id}`}>{group.title}</h3>
+            <ul className="tag-list">
+              {group.skills.map((skill) => (
+                <li key={skill}>{skill}</li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <div className="section-head">
         <h2 ref={experienceRef} tabIndex={-1}>
           Experience
         </h2>
@@ -68,8 +78,8 @@ function About() {
           </li>
         ))}
       </ol>
-        </section>
-    );
+    </section>
+  )
 }
 
-export default About;
+export default About
