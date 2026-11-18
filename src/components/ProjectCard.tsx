@@ -7,6 +7,7 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ project, selectedTag, onTagClick }: ProjectCardProps) {
+    // console.log('Card', project.id)
   return (
        <article className="card">
         <div className="card-head">

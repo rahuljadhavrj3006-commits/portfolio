@@ -10,6 +10,7 @@ interface HeaderProps {
 }
 
 function Header({ theme, onToggleTheme }: HeaderProps) {
+    // console.log('Header render')
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (

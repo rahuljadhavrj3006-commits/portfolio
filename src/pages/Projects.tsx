@@ -5,9 +5,10 @@ import { site } from '../data/site'
 import { filterReducer, initialFilter } from '../lib/filterReducer'
 
 function Projects() {
+  // console.log('Projects render')
   const [filter, dispatch] = useReducer(filterReducer, initialFilter)
   const searchId = useId()
-
+  
   useEffect(() => {
     const previous = document.title
     document.title = `Projects | ${site.name}`

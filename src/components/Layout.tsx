@@ -6,6 +6,7 @@ import { getInitialTheme, saveTheme } from '../lib/theme'
 import type { Theme } from '../lib/theme'
 
 function Layout() {
+  // console.log('Layout render')
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
   useEffect(() => {
