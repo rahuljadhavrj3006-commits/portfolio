@@ -2,8 +2,14 @@ import {useState} from "react";
 import {Link,NavLink} from "react-router";
 import {navItems} from "../data/nav";
 import {site} from "../data/site";
+import type { Theme } from '../lib/theme'
 
-function Header() {
+interface HeaderProps {
+  theme: Theme
+  onToggleTheme: () => void
+}
+
+function Header({ theme, onToggleTheme }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -37,6 +43,16 @@ function Header() {
                         </NavLink>
                     </li>
                 ))}
+                <li>
+              <button
+                type="button"
+                className="theme-toggle"
+                aria-pressed={theme === 'dark'}
+                onClick={onToggleTheme}
+              >
+                Dark mode
+              </button>
+            </li>
             </ul>
         </nav>
       </div>

@@ -472,3 +472,67 @@ button.btn {
 .filter-bar p {
   margin: 0;
 }
+
+/* session 5 */
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121417;
+  --surface: #1b1f24;
+  --text: #e8eaed;
+  --muted: #a0a6ad;
+  --accent: #6db3f2;
+  --accent-text: #0b1a2b;
+  --border: #343a41;
+}
+
+.search-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 24rem;
+  margin-top: 1.5rem;
+}
+
+.search-row label {
+  font-weight: 600;
+}
+
+.search-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.filter-bar {
+  justify-content: space-between;
+}
+
+.theme-toggle {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.theme-toggle[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+@media (min-width: 720px) {
+  .nav ul {
+    align-items: center;
+  }
+}

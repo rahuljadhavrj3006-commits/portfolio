@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useReducer } from 'react'
 import ProjectCard from '../components/ProjectCard'
 import { projects } from '../data/projects'
 import { site } from '../data/site'
+import { filterReducer, initialFilter } from '../lib/filterReducer'
 
 function Projects() {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [filter, dispatch] = useReducer(filterReducer, initialFilter)
+  const searchId = useId()
 
   useEffect(() => {
     const previous = document.title
@@ -14,9 +16,15 @@ function Projects() {
     }
   }, [])
 
-  function handleTagClick(tag: string) {
-    setSelectedTag((current) => (current === tag ? null : tag))
-  }
+  const query = filter.query.trim().toLowerCase()
+  const visibleProjects = projects.filter((project) => {
+    const matchesTag = filter.tag === null || project.stack.includes(filter.tag)
+    const matchesQuery =
+      query === '' ||
+      `${project.title} ${project.summary}`.toLowerCase().includes(query)
+    return matchesTag && matchesQuery
+  })
+  const isFiltering = filter.tag !== null || query !== ''
 
   return (
     <section>
@@ -25,32 +33,51 @@ function Projects() {
         Selected work. Each card is one object in src/data/projects.ts.
       </p>
 
-      {selectedTag && (
-        <div className="filter-bar">
-          <p>
-            Selected technology: <strong>{selectedTag}</strong>. Filtering
-            arrives in session 5.
-          </p>
+      <div className="search-row">
+        <label htmlFor={searchId}>Search projects</label>
+        <input
+          id={searchId}
+          type="search"
+          className="search-input"
+          value={filter.query}
+          placeholder="Try api or sql"
+          onChange={(event) =>
+            dispatch({ type: 'setQuery', query: event.target.value })
+          }
+        />
+      </div>
+
+      <div className="filter-bar">
+        <p role="status">
+          Showing {visibleProjects.length} of {projects.length} projects
+          {filter.tag && (
+            <>
+              {' '}
+              with <strong>{filter.tag}</strong>
+            </>
+          )}
+        </p>
+        {isFiltering && (
           <button
             type="button"
             className="link-button"
-            onClick={() => setSelectedTag(null)}
+            onClick={() => dispatch({ type: 'clear' })}
           >
-            Clear
+            Clear filters
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
-      {projects.length === 0 ? (
-        <p>No projects yet. Add one to src/data/projects.ts.</p>
+      {visibleProjects.length === 0 ? (
+        <p>No projects match. Try another word or clear the filters.</p>
       ) : (
         <ul className="card-grid">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <li key={project.id}>
               <ProjectCard
                 project={project}
-                selectedTag={selectedTag}
-                onTagClick={handleTagClick}
+                selectedTag={filter.tag}
+                onTagClick={(tag) => dispatch({ type: 'toggleTag', tag })}
               />
             </li>
           ))}
