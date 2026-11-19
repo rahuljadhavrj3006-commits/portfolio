@@ -1,21 +1,14 @@
-import { useEffect, useId, useReducer } from 'react'
+import { useId, useReducer } from 'react'
 import ProjectCard from '../components/ProjectCard'
 import { projects } from '../data/projects'
-import { site } from '../data/site'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { filterReducer, initialFilter } from '../lib/filterReducer'
 
 function Projects() {
-  // console.log('Projects render')
   const [filter, dispatch] = useReducer(filterReducer, initialFilter)
   const searchId = useId()
-  
-  useEffect(() => {
-    const previous = document.title
-    document.title = `Projects | ${site.name}`
-    return () => {
-      document.title = previous
-    }
-  }, [])
+  // console.log('Projects render')
+ useDocumentTitle('Projects')
 
   const query = filter.query.trim().toLowerCase()
   const visibleProjects = projects.filter((project) => {

@@ -1,14 +1,10 @@
-import { useEffect } from 'react'
 import { site } from '../data/site'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 function CvContact() {
-  useEffect(() => {
-    const previous = document.title
-    document.title = `CV and Contact | ${site.name}`
-    return () => {
-      document.title = previous
-    }
-  }, [])
+
+  useDocumentTitle('CV and Contact')
+  
 
   return (
     <section>

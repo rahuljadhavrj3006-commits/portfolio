@@ -1,21 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Section from '../components/Section'
 import { aboutParagraphs } from '../data/about'
 import { experience } from '../data/experience'
-import { site } from '../data/site'
 import { skillGroups } from '../data/skills'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 function About() {
   const [showHighlights, setShowHighlights] = useState(false)
   const experienceRef = useRef<HTMLHeadingElement>(null)
 
-  useEffect(() => {
-    const previous = document.title
-    document.title = `About | ${site.name}`
-    return () => {
-      document.title = previous
-    }
-  }, [])
+  useDocumentTitle('About')
 
   function jumpToExperience() {
     experienceRef.current?.scrollIntoView()
